@@ -1,0 +1,19 @@
+{
+  "name": "whos-your-source",
+  "version": "1.0.0",
+  "description": "Find the original source of a posted news article.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephenGilboy/whos-your-source.git"
+  },
+  "author": "Stephen Gilboy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/StephenGilboy/whos-your-source/issues"
+  },
+  "homepage": "https://github.com/StephenGilboy/whos-your-source#readme"
+}

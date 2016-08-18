@@ -6,7 +6,7 @@ var source = function () {
 
     var keywords = ['according to', 'reported'];
     var knownSources = ['economist', 'bbc', 'npr', 'pbs', 'wsj', 'abc', 'nbc', 'cbs', 'cnn', 'usatoday', 'blaze', 'nytimes',
-        'washingtonpost', 'msnbc', 'guardian', 'newyorker', 'politico', 'fox'];
+        'washingtonpost', 'msnbc', 'guardian', 'newyorker', 'politico', 'fox', 'france24', 'independent'];
 
     var mapToRedditFormat = function (atag) {
         return '[' + atag.text() + '](' + atag.attr('href') + ')';

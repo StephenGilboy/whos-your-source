@@ -5,7 +5,7 @@ var source = function () {
     var self = this;
 
     var keywords = ['according to', 'reported'];
-    var knownSources = ['economist', 'bbc', 'npr', 'pbs', 'wsj', 'abc', 'nbc', 'cbs', 'cnn', 'usatoday', 'blaze', 'nytimes',
+    var knownSources = ['economist', 'bbc', 'bloomberg', 'npr', 'pbs', 'wsj', 'abc', 'nbc', 'cbs', 'cnn', 'usatoday', 'blaze', 'nytimes',
         'washingtonpost', 'msnbc', 'guardian', 'newyorker', 'politico', 'fox', 'france24', 'independent'];
 
     var mapToRedditFormat = function (atag) {
@@ -39,7 +39,22 @@ var source = function () {
                         return txt.includes(k);
                     }).length > 0;
             }).map(function (i, el) {
-                return $(this).children('a')
+                var results = [];
+                if ($(this).children('em').length > 0) {
+                    // Sometimes sources are wrapped in <em>
+                    $(this).children('em').children('a')
+                        .filter(function (i, el) {
+                        // Only grab links that are from known sources
+                        return knownSources.filter(function (src) {
+                                return $(el).attr('href').toLowerCase().includes(src);
+                            }).length > 0;
+                    })
+                        .map(function (i, el) {
+                            results.push(mapToRedditFormat($(el)));
+                        });
+                }
+
+                $(this).children('a')
                     .filter(function (i, el) {
                         // Only grab links that are from known sources
                         return knownSources.filter(function (src) {
@@ -47,19 +62,12 @@ var source = function () {
                             }).length > 0;
                     })
                     .map(function (i, el) {
-                        return mapToRedditFormat($(this));
+                       results.push(mapToRedditFormat($(this)));
                     });
+                return results;
             });
 
-        // Flatten our results into a single array
-        var flat = [];
-        for(var i = 0; i < sources.length; i++) {
-            for(var x = 0; x < sources[i].length; x++) {
-                flat.push(sources[i][x]);
-            }
-        }
-
-        cb(null, flat);
+        cb(null, sources);
     };
 
     self.findPossibleSource = function (link, callback) {
